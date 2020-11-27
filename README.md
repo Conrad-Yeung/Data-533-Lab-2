@@ -2,9 +2,10 @@
 
 Group: Aamir Khan and Conrad Yeung  
 Package: Bank  
-Sub-packages: Accounts and Transactions  
-1) Account modules:  
-a. Base Account class:  
+Sub-packages: Accounts and Transactions
+
+1)Account modules:  
+a) Base Account class:  
         i) Deposit  
         ii) Withdraw  
         iii) Summary  
@@ -32,10 +33,10 @@ iii) Check Transaction Limit
 Functions:
 1)	Deposit:  Money goes into account
 2)	Withdraw: Money leaves account  
-a.	Pay – Money leaves account
+a)	Pay – Money leaves account
 3)	Summary: Balance, Past 10 transactions
 4)	Set Max …: Max withdrawal amount per transaction
-a.	Set Credit/Transaction Limit: Max withdrawal amount per transaction
+a)	Set Credit/Transaction Limit: Max withdrawal amount per transaction
 5)	Interest Rate – Show current interest rate
 6)	Type of Card: Debit Card Details (Type of Card, Max Transaction Limit, Owner Name)
 
