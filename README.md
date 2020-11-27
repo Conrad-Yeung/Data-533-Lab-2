@@ -4,7 +4,7 @@ Group: Aamir Khan and Conrad Yeung
 Package: Bank  
 Sub-packages: Accounts and Transactions
 
-1)Account modules:  
+1) Account modules:  
 a) Base Account class:  
         i) Deposit  
         ii) Withdraw  
