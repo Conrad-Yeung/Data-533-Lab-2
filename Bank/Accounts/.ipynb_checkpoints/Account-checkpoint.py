@@ -2,17 +2,22 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
-
+from random import randint
 
 class Account:
-    def __init__(self,name,account_number,amount=0,):
+    def __init__(self,name,amount=0):
         self.name = name
-        self.ac = account_number
+        self.ac = randint(10000000,99999999)
         self.bal = amount
         self.bal_hist = [amount] #Initialize Balance History
         self.bal_time = [datetime.now().strftime("%Y/%m/%d, %H:%M:%S")] #Initialize Balance History
         self.recent_transact = []
         self.trans_time = []
+    
+    def details(self):
+        print("The account holder is: {}".format(self.name))
+        print("The account number is: {}".format(self.ac))
+        print("Your current balance is: ${:.2f}".format(self.bal))
         
     def deposit(self,amount=0):
         self.bal += amount
