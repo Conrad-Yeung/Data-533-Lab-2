@@ -48,9 +48,8 @@ class Account:
         summary
             Prints summary information as well as graph of past 30 changes to your account balance.
     '''
-    
     def __init__(self,name,amount=0):
-    '''
+        '''
         Parameters
         ----------
         name : str
@@ -63,10 +62,15 @@ class Account:
         ------
         NotImplementedError
             When initial deposit is less than 0.
-        
-    '''
+        '''
         if amount < 0:
-            raise NotImplementedError("Initial deposit must be non-negative.")     
+            raise NotImplementedError("Initial deposit must be non-negative.")
+        
+        for i in str(name):
+            if i.isdigit():
+                print("Please enter a name. Cannot have numerical values.\n")
+                return
+            
         self.name = name
         self.ac = randint(10000000,99999999)
         self.bal = amount
@@ -79,9 +83,9 @@ class Account:
         '''
         Prints account holder, account number and current balance
         '''
-        print("The account holder is: {}".format(self.name))
-        print("The account number is: {}".format(self.ac))
-        print("Your current balance is: ${:.2f}".format(self.bal))
+        print("The account holder is: {}.".format(self.name))
+        print("The account number is: {}.".format(self.ac))
+        print("Your current balance is: ${:.2f}.\n".format(self.bal))
         
     def deposit(self,amount=0):
         '''
@@ -92,12 +96,12 @@ class Account:
         amount : int/float (optional). Must be positive number.
         '''
         if amount <0:
-            print("Amount to withdraw must be greater than 0")
+            print("Amount to deposit must be greater than 0.\n")
             return
         self.bal += amount
         timestamp = datetime.now().strftime("%Y/%m/%d, %H:%M:%S")
-        print("${:.2f} has been deposited to account {}".format(amount,self.ac))
-        print("Current balance: ${:.2f}".format(self.bal))
+        print("${:.2f} has been deposited to account {}.".format(amount,self.ac))
+        print("Current balance: ${:.2f}.\n".format(self.bal))
         
         if len(self.bal_hist) < 30: #Record Balance
             self.bal_hist.append(self.bal)
@@ -122,15 +126,15 @@ class Account:
         amount : int/float (optional). Must be positive number.
         '''
         if amount <0:
-            print("Amount to withdraw must be greater than 0")
+            print("Amount to withdraw must be greater than 0.\n")
             return
         timestamp = datetime.now().strftime("%Y/%m/%d, %H:%M:%S")
         if amount > self.bal:
-            print("You do not have enough funds to withdraw {:.2f}".format(amount))
+            print("You do not have enough funds to withdraw {:.2f}.\n".format(amount))
         else:
             self.bal-=amount
-            print("${:.2f} has been withdrawn from account {}".format(amount,self.ac))
-            print("Current balance: ${:.2f}".format(self.bal))
+            print("${:.2f} has been withdrawn from account {}.".format(amount,self.ac))
+            print("Current balance: ${:.2f}.\n".format(self.bal))
             
             if len(self.bal_hist) < 30: #Record Balance 
                 self.bal_hist.append(self.bal)
@@ -150,9 +154,9 @@ class Account:
         '''
         Prints summary information as well as graph of past 30 changes to your account balance.
         '''
-        print("Account Holder: {}".format(self.name))
-        print("Current Balance: ${:.2f}".format(self.bal))
-        print("Your balance history for the past 30 transcations:")
+        print("Account Holder: {}.".format(self.name))
+        print("Current Balance: ${:.2f}.".format(self.bal))
+        print("Your balance history for the past 30 transcations:\n")
         
         #Create Plot of Balance
         fig,ax = plt.subplots()
@@ -169,3 +173,4 @@ class Account:
         plt.title("Account balance over past 30 transactions")
         plt.xlabel("Date and time of transcation (YYYY/MM/DD HH:MM:SS)")
         plt.ylabel("Account balance")
+        print("\n")

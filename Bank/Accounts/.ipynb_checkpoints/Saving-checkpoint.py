@@ -1,7 +1,7 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-from . import Account as ac
+from . import account as ac
 
 class Saving(ac.Account):
     '''
@@ -62,23 +62,23 @@ class Saving(ac.Account):
         iv) summary
             Prints summary information as well as graph of past 30 changes to your account balance.
         
-        v) change_lim(newlim=self.trans_lim)
+        v) change_lim(newlim=0)
             Changes the transaction limit of the account.
             
             Parameters:
             -----------
             newlim : int/float. Must be positive number          
         
-        vi) setfixdeposit(amount=0,intrate=self.intrate,test=False)
+        vi) setfixdeposit(amount=0,intrate=0.01,test=False)
             Create fixed deposit or check if one is existing.
             
             Parameters:
             -----------
             amount : int/float. Must be positive number greater than 0.
-            intrate : float (default = 0.01). Must be positive number greater than 0 and less than 1
+            intrate : float (default = 0.01). Must be positive number greater than 0.
             test : bool (default = False). Testing parameter for datetime variables
         '''
-    def __init__(self,name,amount=0,maxlimit = 1000,intrate=0.01):
+    def __init__(self,name,amount=0,maxlimit = 1000):
         '''
         Parameters
         ----------
@@ -88,20 +88,24 @@ class Saving(ac.Account):
             initial deposit into the account must be positive number.
         maxlimit: int/float (optional)
             initial withdrawl limit must be positive number.
-        intrate: float (optional):
-            initial interest rate. must be positive number greater than 0.
             
         Raises
         ------
         NotImplementedError
-            When initial deposit, maxlimit or interest rate is less than 0. Interest rate cannot be 0.
+            When initial deposit, maxlimit is less than 0.
         '''
-        if amount < 0 or maxlimit < 0 or intrate <=0:
+        if amount < 0 or maxlimit < 0:
             raise NotImplementedError("Initial deposit, max limit and interest rate must be non-negative.")
+            
+        for i in str(name):
+            if i.isdigit():
+                print("Please enter a name. Cannot have numerical values.\n")
+                return
+            
         ac.Account.__init__(self,name,amount)
         self.trans_lim = maxlimit
         self.actype = "Savings"
-        self.intrate = intrate
+        self.intrate = 0.01
         self.fixed_amount = 0
         self.datestart = 0
         self.dateend = 0
@@ -118,10 +122,10 @@ class Saving(ac.Account):
         print("Your current transaction limit is: ${:.2f}.".format(self.trans_lim))
         print("--------------------------------------------")
         if self.fix_dep_inprocess == 0:
-            print("You currently have no fixed deposits in process.")
+            print("You currently have no fixed deposits in process.\n")
         else:
-            print("You currently have ${:.2f} fixed at an interest rate of {:.2f}%".format(self.fixed_amount,self.intrate*100))
-            print("On {}, ${} will be added to your Savings account.".format(self.dateend.strftime("%Y/%m/%d"),self.fixed_amount+(self.fixed_amount*self.intrate)))   
+            print("You currently have ${:.2f} fixed at an interest rate of {:.2f}%.".format(self.fixed_amount,self.intrate*100))
+            print("On {}, ${} will be added to your Savings account.\n".format(self.dateend.strftime("%Y/%m/%d"),self.fixed_amount+(self.fixed_amount*self.intrate)))   
            
     def withdraw(self,amount=0):
         '''
@@ -132,18 +136,18 @@ class Saving(ac.Account):
             amount : int/float (optional). Must be positive number. Must be less than current account balance. Must be less than trans_lim.
         '''
         if amount < 0:
-            print("Amount to withdraw must be greater than 0")
+            print("Amount to withdraw must be greater than 0.\n")
             return
         
         timestamp = datetime.now().strftime("%Y/%m/%d, %H:%M:%S")
         if amount > self.trans_lim:
-            print("Your current transaction limit is ${:.2f}, therefore you are unable to withdraw the requested amount of ${:.2f}.".format(self.trans_lim,amount)) 
+            print("Your current transaction limit is ${:.2f}, therefore you are unable to withdraw the requested amount of ${:.2f}.\n".format(self.trans_lim,amount)) 
         elif amount > self.bal:
-            print("You do not have enough funds to withdraw {:.2f}".format(amount))
+            print("You do not have enough funds to withdraw {:.2f}.\n".format(amount))
         else:
             self.bal-=amount
-            print("${:.2f} has been withdrawn from account {}".format(amount,self.ac))
-            print("Current balance: ${:.2f}".format(self.bal))
+            print("${:.2f} has been withdrawn from account {}.".format(amount,self.ac))
+            print("Current balance: ${:.2f}.\n".format(self.bal))
             
             if len(self.bal_hist) < 30: #Record Balance 
                 self.bal_hist.append(self.bal)
@@ -159,7 +163,7 @@ class Saving(ac.Account):
                 self.recent_transact.pop(0)
                 self.trans_time.pop(0)
 
-    def change_lim(self,newlim=self.trans_lim):
+    def change_lim(self,newlim=0):
         '''
         Changes the transaction limit of the account.
             
@@ -168,19 +172,19 @@ class Saving(ac.Account):
             newlim : int/float. Must be positive number
         '''
         if newlim < 0:
-            print("Account limit must be greater than 0.")
+            print("Account limit must be greater than 0.\n")
             return
         
         if self.trans_lim < newlim:
-            print("Your transaction limit has increased from ${:.2f} to ${:.2f}.".format(self.trans_lim,newlim))
+            print("Your transaction limit has increased from ${:.2f} to ${:.2f}.\n".format(self.trans_lim,newlim))
             self.trans_lim = newlim
         elif self.trans_lim > newlim:
-            print("Your transaction limit has decreased from ${:.2f} to ${:.2f}.".format(self.trans_lim,newlim))
+            print("Your transaction limit has decreased from ${:.2f} to ${:.2f}.\n".format(self.trans_lim,newlim))
             self.trans_lim = newlim
         else:
-            print("Your transaction limit is already ${:.2f}.".format(self.trans_lim))
+            print("Your transaction limit is already ${:.2f}.\n".format(self.trans_lim))
 ###        
-    def setfixdeposit(self,amount=0,intrate=self.intrate,test=False):
+    def setfixdeposit(self,amount=0,intrate=0.01,test=False):
         '''
         Create fixed deposit or check if one is existing.
             
@@ -193,18 +197,18 @@ class Saving(ac.Account):
         if test == True: #For testing purposes
             self.dateend = datetime.now()
         
-        if amount <=0: 
-            print("Amount for a fixed deposit must be greater than 0")
+        if amount <=0 or intrate <=0: 
+            print("Amount for a fixed deposit and interest rate must be greater than 0.\n")
             return
         
         if self.fix_dep_inprocess == 1 and datetime.now().strftime("%Y/%m/%d") == self.dateend.strftime("%Y/%m/%d"): #Have fixed deposit created - lockin = OVER
-            print("Your fixed depot created on {} is complete.".format(self.datestart.strftime("%Y/%m/%d")))
+            print("Your fixed depot created on {} is complete.\n".format(self.datestart.strftime("%Y/%m/%d")))
             self.deposit(self.fixed_amount+(self.fixed_amount*self.intrate))
             self.fix_dep_inprocess = 0
             self.datestart = 0
             self.dateend = 0
         elif self.fix_dep_inprocess == 1 and datetime.now().strftime("%Y/%m/%d") != self.dateend.strftime("%Y/%m/%d"):
-            print("You already have a fixed deposit in process. The current amount locked in is ${:.2f} at a rate of {:.2f}. The amount will be made available on {}.".format(self.fixed_amount,self.intrate*100,self.dateend.strftime("%Y/%m/%d")))
+            print("You already have a fixed deposit in process. The current amount locked in is ${:.2f} at a rate of {:.2f}. The amount will be made available on {}.\n".format(self.fixed_amount,self.intrate*100,self.dateend.strftime("%Y/%m/%d")))
             return 
         elif self.fix_dep_inprocess == 0: #Creation - no current fixed deposit therefore initialize
             self.datestart = datetime.now()
@@ -213,4 +217,4 @@ class Saving(ac.Account):
             self.fixed_amount = amount
             self.intrate = intrate
             print("Your deposit of ${:.2f} has been fixed for a year with an interest rate of {:.2f}%.".format(self.fixed_amount,self.intrate*100))
-            print("On {}, ${} will be added to your Savings account.".format(self.dateend.strftime("%Y/%m/%d"),self.fixed_amount+(self.fixed_amount*self.intrate)))   
+            print("On {}, ${} will be added to your Savings account.\n".format(self.dateend.strftime("%Y/%m/%d"),self.fixed_amount+(self.fixed_amount*self.intrate)))   

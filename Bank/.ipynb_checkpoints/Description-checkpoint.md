@@ -31,6 +31,6 @@ Contains modules for initializing and managing bank accounts such as Chequings a
    * ```obj.deposit(amount = 0)```: Deposit amount into account
    * ```obj.withdraw(amount=0)```: Withdraw amount from account
    * ```obj.summary()```: Shows account details and plot of the past 30 changes in your account balance.
-   * ```obj.change_lim(newlim=self.trans_lim)```: Change the transaction limit of the account - will default to the value at the time of account creation (and by default is $1000)
+   * ```obj.change_lim(newlim=0m)```: Change the transaction limit of the account - will default to 0 and give you a message that the limit needs to be greater than 0.
  * Function unique to "Saving" class:
     * ```obj.setfixdeposit(amount=0,intrate=self.intrate,test=False)```: Create/Check a fixed depost for the account. The deposit will be locked in for a year and will automatically transfer the funds to your balance when the time period ends.

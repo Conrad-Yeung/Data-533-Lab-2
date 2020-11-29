@@ -97,7 +97,7 @@ Subpackages:
         iv) summary
             Prints summary information as well as graph of past 30 changes to your account balance.
         
-        v) change_lim(newlim=self.trans_lim)
+        v) change_lim(newlim=0)
             Changes the transaction limit of the account.
             
             Parameters:
@@ -161,20 +161,20 @@ Subpackages:
         iv) summary
             Prints summary information as well as graph of past 30 changes to your account balance.
         
-        v) change_lim(newlim=self.trans_lim)
+        v) change_lim(newlim=0)
             Changes the transaction limit of the account.
             
             Parameters:
             -----------
             newlim : int/float. Must be positive number          
         
-        vi) setfixdeposit(amount=0,intrate=self.intrate,test=False)
+        vi) setfixdeposit(amount=0,intrate=0.01,test=False)
             Create fixed deposit or check if one is existing.
             
             Parameters:
             -----------
             amount : int/float. Must be positive number greater than 0.
-            intrate : float (default = 0.01). Must be positive number greater than 0 and less than 1
+            intrate : float (default = 0.01). Must be positive number greater than 0.
             test : bool (default = False). Testing parameter for datetime variables
             
                 
