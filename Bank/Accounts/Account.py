@@ -1,11 +1,72 @@
 from datetime import datetime
+from random import randint
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
-from random import randint
+
 
 class Account:
+    '''
+    Contains base account class and methods
+        
+        Attributes:
+        -----------
+        name : str
+            the name of the account holder
+        ac : int
+            account number
+        bal : int/float
+            balance of the account
+        bal_hist : list of ints/floats
+            balance history of account (past 30 changes of balance)
+        bal_time : list of datetime (YYYY/MM/DD HH/MM/SS)
+            times of balance history
+        recent_transact: 
+            balance history of account (past 30 transactions)
+        trans_time : list of datetime (YYYY/MM/DD HH/MM/SS)
+            times of transcations
+            
+        Methods:
+        --------
+        details
+            Prints account holder, account number and current balance
+            
+        deposit(amount = 0)
+            Deposits money into the account and prints new account balance. 
+         
+            Parameters:
+            ----------
+            amount : int/float (optional). Must be positive number.
+        
+        withdraw(amount=0)
+            Withdraws money from the account and prints new account balance. 
+            
+            Parameters:
+            ----------
+            amount : int/float (optional). Must be positive number. Must be less than current account balance.
+        
+        summary
+            Prints summary information as well as graph of past 30 changes to your account balance.
+    '''
+    
     def __init__(self,name,amount=0):
+    '''
+        Parameters
+        ----------
+        name : str
+            the name of the account holder
+        amount : int/float (optional)
+            initial deposit into the account
+            must be positive number
+        
+        Raises
+        ------
+        NotImplementedError
+            When initial deposit is less than 0.
+        
+    '''
+        if amount < 0:
+            raise NotImplementedError("Initial deposit must be non-negative.")     
         self.name = name
         self.ac = randint(10000000,99999999)
         self.bal = amount
@@ -15,11 +76,24 @@ class Account:
         self.trans_time = []
     
     def details(self):
+        '''
+        Prints account holder, account number and current balance
+        '''
         print("The account holder is: {}".format(self.name))
         print("The account number is: {}".format(self.ac))
         print("Your current balance is: ${:.2f}".format(self.bal))
         
     def deposit(self,amount=0):
+        '''
+        Deposits money into the account and prints new account balance. 
+         
+        Parameters:
+        ----------
+        amount : int/float (optional). Must be positive number.
+        '''
+        if amount <0:
+            print("Amount to withdraw must be greater than 0")
+            return
         self.bal += amount
         timestamp = datetime.now().strftime("%Y/%m/%d, %H:%M:%S")
         print("${:.2f} has been deposited to account {}".format(amount,self.ac))
@@ -40,6 +114,16 @@ class Account:
             self.trans_time.pop(0)
              
     def withdraw(self,amount=0):
+        '''
+        Withdraws money from the account and prints new account balance. 
+         
+        Parameters:
+        ----------
+        amount : int/float (optional). Must be positive number.
+        '''
+        if amount <0:
+            print("Amount to withdraw must be greater than 0")
+            return
         timestamp = datetime.now().strftime("%Y/%m/%d, %H:%M:%S")
         if amount > self.bal:
             print("You do not have enough funds to withdraw {:.2f}".format(amount))
@@ -63,6 +147,9 @@ class Account:
                 self.trans_time.pop(0)
                 
     def summary(self):
+        '''
+        Prints summary information as well as graph of past 30 changes to your account balance.
+        '''
         print("Account Holder: {}".format(self.name))
         print("Current Balance: ${:.2f}".format(self.bal))
         print("Your balance history for the past 30 transcations:")
