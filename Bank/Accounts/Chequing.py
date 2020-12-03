@@ -141,7 +141,7 @@ class Chequing(ac.Account):
             -----------
             newlim : int/float. Must be positive number
         '''
-        if newlim < 0:
+        if newlim <= 0:
             print("Account limit must be greater than 0.\n")
             return
         
