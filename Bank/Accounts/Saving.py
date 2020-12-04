@@ -171,7 +171,7 @@ class Saving(ac.Account):
             -----------
             newlim : int/float. Must be positive number
         '''
-        if newlim < 0:
+        if newlim <= 0:
             print("Account limit must be greater than 0.\n")
             return
         
@@ -210,7 +210,7 @@ class Saving(ac.Account):
             self.datestart = 0
             self.dateend = 0
         elif self.fix_dep_inprocess == 1 and (today != self.dateend or (today-self.dateend).days < 0): #Fixed deposit still in progress
-            print("You already have a fixed deposit in process. The current amount locked in is ${:.2f} at a rate of {:.2f}. The amount will be made available on {}.\n".format(self.fixed_amount,self.intrate*100,self.dateend.strftime("%Y/%m/%d")))
+            print("You already have a fixed deposit in process. The current amount locked in is ${:.2f} at a rate of {:.2f}%. The amount will be made available on {}.\n".format(self.fixed_amount,self.intrate*100,self.dateend.strftime("%Y/%m/%d")))
             return 
         elif self.fix_dep_inprocess == 0: #Creation - no current fixed deposit therefore initialize
             self.datestart = today

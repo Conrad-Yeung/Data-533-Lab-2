@@ -171,7 +171,7 @@ class Saving(ac.Account):
             -----------
             newlim : int/float. Must be positive number
         '''
-        if newlim < 0:
+        if newlim <= 0:
             print("Account limit must be greater than 0.\n")
             return
         
@@ -194,25 +194,27 @@ class Saving(ac.Account):
             intrate : float (default = 0.01). Must be positive number greater than 0.
             test : bool (default = False). Testing parameter for datetime variables.
         '''
+        today = datetime(datetime.today().year,datetime.today().month,datetime.today().day)
+        
         if test == True: #For testing purposes
-            self.dateend = datetime.now()
+            self.dateend = today
         
         if amount <=0 or intrate <=0: 
             print("Amount for a fixed deposit and interest rate must be greater than 0.\n")
             return
         
-        if self.fix_dep_inprocess == 1 and datetime.now().strftime("%Y/%m/%d") == self.dateend.strftime("%Y/%m/%d"): #Have fixed deposit created - lockin = OVER
+        if self.fix_dep_inprocess == 1 and (today == self.dateend or (today-self.dateend).days >= 0): #Have fixed deposit created - lockin = OVER
             print("Your fixed depot created on {} is complete.\n".format(self.datestart.strftime("%Y/%m/%d")))
             self.deposit(self.fixed_amount+(self.fixed_amount*self.intrate))
             self.fix_dep_inprocess = 0
             self.datestart = 0
             self.dateend = 0
-        elif self.fix_dep_inprocess == 1 and datetime.now().strftime("%Y/%m/%d") != self.dateend.strftime("%Y/%m/%d"):
-            print("You already have a fixed deposit in process. The current amount locked in is ${:.2f} at a rate of {:.2f}. The amount will be made available on {}.\n".format(self.fixed_amount,self.intrate*100,self.dateend.strftime("%Y/%m/%d")))
+        elif self.fix_dep_inprocess == 1 and (today != self.dateend or (today-self.dateend).days < 0): #Fixed deposit still in progress
+            print("You already have a fixed deposit in process. The current amount locked in is ${:.2f} at a rate of {:.2f}%. The amount will be made available on {}.\n".format(self.fixed_amount,self.intrate*100,self.dateend.strftime("%Y/%m/%d")))
             return 
         elif self.fix_dep_inprocess == 0: #Creation - no current fixed deposit therefore initialize
-            self.datestart = datetime.now()
-            self.dateend = self.datestart + relativedelta(years=1)
+            self.datestart = today
+            self.dateend = today + relativedelta(years=1)
             self.fix_dep_inprocess = 1
             self.fixed_amount = amount
             self.intrate = intrate
