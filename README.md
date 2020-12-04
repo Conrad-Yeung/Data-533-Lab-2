@@ -38,7 +38,7 @@ Contains modules for initializing and managing bank accounts such as Chequings a
    * ```obj.summary()```: Shows account details and plot of the past 30 changes in your account balance.
    * ```obj.change_lim(newlim=0m)```: Change the transaction limit of the account - will default to 0 and give you a message that the limit needs to be greater than 0.
  * Function unique to "Saving" class:
-    * ```obj.setfixdeposit(amount=0,intrate=0.01e,test=False)```: Create/Check a fixed depost for the account. The deposit will be locked in for a year and transfer the funds to your balance. The funds will be transfered after the time period when the function is called again (i.e: call the function once the time period is over and the funds will be deposited)  
+   * ```obj.setfixdeposit(amount=0,intrate=0.01,test=False)```: Create/Check a fixed depost for the account. The deposit will be locked in for a year and transfer the funds to your balance. The funds will be transfered after the time period when the function is called again (i.e: call the function once the time period is over and the funds will be deposited)  
 
 ### ***"accounts"*** subpackage:  
 a) card (base) class:  
