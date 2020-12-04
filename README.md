@@ -1,43 +1,43 @@
 # Data-533-Lab-2
 
-Group: Aamir Khan and Conrad Yeung  
+Group: Conrad Yeung and Aamir Khan  
 Package: Bank  
-Sub-packages: Accounts and Transactions
+Sub-packages: accounts and cards
 
-1) Account modules:  
-a) Base Account class:  
+1) account modules:  
+a) account (base) class:  
         i) Deposit  
         ii) Withdraw  
         iii) Summary  
-b) Savings (inherits Base) class:  
+b) savings (inherits base) class:  
         i) Inherits – Deposit, Withdraw, Summary  
         ii) Set Max Withdrawal for Savings  
         iii) Interest Rate (show interest rate)  
-c) Chequings (inherits Base) class:  
+c) chequings (inherits base) class:  
         i) Inherits – Deposit, Withdraw, Summary
         ii) Set Max Withdrawal for Chequings
         
 2) cards modules:  
 a) card (base) class:  
         i) makePayment  
-        ii) changePIN
-        iii) checkBalance
-        iv) checkTransactions
-        v) makePayment (ABSTRACT)
-b) credit (inherits card) class:  
-        i) Inherits – makePayment, changePIN, checkBalance and checkTransactions
-        ii) setCreditLimit
-        iii) checkCreditLimit
-        iv) makePayment (OVERLOADED)
-        v) checkTransactions (OVERLOADED)
-c) debit (inherits card) class:  
+        ii) changePIN  
+        iii) checkBalance  
+        iv) checkTransactions  
+        v) makePayment (ABSTRACT)  
+b) credit (inherits card) class:    
         i) Inherits – makePayment, changePIN, checkBalance and checkTransactions  
-        ii) setTransactionLimit  
-        iii) checkTransactionLimit
-        iv) changeCardType
-        v) checkCardType
-        vi) makePayment (OVERLOADED)
-
+        ii) setCreditLimit  
+        iii) checkCreditLimit  
+        iv) makePayment (OVERLOADED)  
+        v) checkTransactions (OVERLOADED)  
+c) debit (inherits card) class:    
+        i) Inherits – makePayment, changePIN, checkBalance and checkTransactions    
+        ii) setTransactionLimit    
+        iii) checkTransactionLimit  
+        iv) changeCardType  
+        v) checkCardType  
+        vi) makePayment (OVERLOADED)  
+  
 Key Functions:
 1)	Deposit:  Money goes into account
 2)	Withdraw: Money leaves account  
