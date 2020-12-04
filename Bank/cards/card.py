@@ -3,6 +3,7 @@ from collections import defaultdict
 import pandas as pd
 
 class card:
+    manager_pwd = 7777
     '''
     Contains base card class attribute and methods
         
@@ -19,7 +20,7 @@ class card:
         bal_curr : int/float
             current balance of the account
         trans_hist: dictionary with datetime(keys): transaction details(values)
-            time/transaction history of account (past 30 transactions)
+            time/transaction history of account
             
         Methods:
         --------
@@ -36,7 +37,7 @@ class card:
             Prints card holder, card account number and current balance
                     
         checkTransactions
-            Prints summary information as well as graph of past 30 changes to your account balance.
+            Prints summary information of past transactions.
     '''
 
     def __init__(self, acct_no, acct_title, card_no, pin_entered, amount = 0):
@@ -73,36 +74,10 @@ class card:
         
              
     def makePayment(self, pin_entered, amount, srvc_point="Unknown"):
-        '''
-        Make purchase payment at service point and print new account balance. 
-         
-        Parameters:
-        ----------
-        pin_entered : int
-            card pin number
-        amount : int/float
-            charged amount (Must be positive number)
-        srvc_point: string
-            service point where payment was made
-        '''
-        # Customer Authentication
-        if (pin_entered is None) | (not self.checkCode(pin_entered)):
-            print("Invalid pin code, please try again!")
-            return
-        
-        if (amount is None) | (amount <= 0):
-            print("Invalid amount entered")
-            return
+        # Payment will be specific to the card type.
+        # Sub-classes credit and debit implement this function
+        pass
 
-        timestamp = datetime.now().strftime("%Y/%m/%d, %H:%M:%S")
-
-        if amount > self.bal_curr:
-            print("You do not have enough funds to withdraw {:.2f}.\n".format(amount))
-        else:
-            self.bal_curr -= amount
-            print("${:.2f} has been withdrawn from card no. {} at {}.".format(amount, self.card_no, srvc_point))
-            print("Remaining balance: ${:.2f}.\n".format(self.bal_curr))
-            self.trans_hist[timestamp]= [-amount, srvc_point]
 
 
     def checkCode(self, pin_entered):
@@ -131,11 +106,9 @@ class card:
         # Customer Authentication
         if (oldPIN is None) | (not self.checkCode(oldPIN)):
             print("Invalid pin code, please try again!")
-            return
         else:
             self.__card_pin = newPIN
             print("Card pin code successfully changed!")
-        return
 
 
     def checkBalance(self, pin_entered):
@@ -151,12 +124,10 @@ class card:
         # Customer Authentication
         if (pin_entered is None) | (not self.checkCode(pin_entered)):
             print("Invalid pin code, please try again!")
-            return
         else:
             print("Account Holder: {}".format(self.acct_title))
             print("Card Number: {}".format(self.card_no))
             print("Current Balance: ${:.2f}".format(self.bal_curr))
-        return
 
 
     def checkTransactions(self, pin_entered):
@@ -171,7 +142,6 @@ class card:
         # Customer Authentication
         if (pin_entered is None) | (not self.checkCode(pin_entered)):
             print("Invalid pin code, please try again!")
-            return
         else:
             print("Account Holder: {}".format(self.acct_title))
             print("Current Balance: ${:.2f}".format(self.bal_curr))
@@ -179,3 +149,4 @@ class card:
             
             df = pd.DataFrame(self.trans_hist, index=['Amount', 'Card Service Point']).T
             print(df)
+            print("Current Available Balance: ${}".format(self.bal_curr))
