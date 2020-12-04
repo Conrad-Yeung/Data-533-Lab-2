@@ -167,13 +167,13 @@ class credit(cc.card):
             return
         
         if self.interest_rate < newRate:
-            print("Your card interest rate has increased from ${:.2f} to ${:.2f}.\n".format(self.interest_rate, newRate))
+            print("Your card interest rate has increased from {:.2f}% to {:.2f}%.\n".format(self.interest_rate, newRate))
             self.interest_rate = newRate
         elif self.interest_rate > newRate:
-            print("Your card interest rate has decreased from ${:.2f} to ${:.2f}.\n".format(self.interest_rate, newRate))
+            print("Your card interest rate has decreased from {:.2f}% to {:.2f}%.\n".format(self.interest_rate, newRate))
             self.interest_rate = newRate
         else:
-            print("Your card interest rate is already ${:.2f}.\n".format(self.interest_rate))
+            print("Your card interest rate is already {:.2f}%.\n".format(self.interest_rate))
 
 
     def checkInterestRate(self, pin_entered):
@@ -190,7 +190,7 @@ class credit(cc.card):
         if (pin_entered is None) | (not self.checkCode(pin_entered)):
             print("Invalid pin code, please try again!")
         else:
-            print("Your card interest rate  is ${:.2f}.\n".format(self.interest_rate))
+            print("Your card interest rate  is {:.2f}%.\n".format(self.interest_rate))
 
 
     def makePayment(self, pin_entered, amount, srvc_point="Unknown"):
@@ -237,4 +237,4 @@ class credit(cc.card):
         returns : none
         '''
         cc.card.checkTransactions(self, pin_entered)
-        print("Current Interest Rate: {:.2f}".format(self.interest_rate))
+        print("Current Interest Rate: {:.2f}%.".format(self.interest_rate))
