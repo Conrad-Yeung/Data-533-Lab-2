@@ -17,20 +17,28 @@ c) Chequings (inherits Base) class:
         i) Inherits – Deposit, Withdraw, Summary
         ii) Set Max Withdrawal for Chequings
         
-2) Cards modules:  
-a) Card class:  
-i) Pay  
-ii) Summary  
-b) Credit Card (inherits Card) class:  
-i) Inherits – Pay and Summary  
-ii) Set Credit Limit  
-iii) Check Credit Limit  
-c) Debit Card (inherit Card) class:  
-i) Inherits – Pay and Summary  
-ii) Type of Card  
-iii) Check Transaction Limit  
+2) cards modules:  
+a) card (base) class:  
+        i) makePayment  
+        ii) changePIN
+        iii) checkBalance
+        iv) checkTransactions
+        v) makePayment (ABSTRACT)
+b) credit (inherits card) class:  
+        i) Inherits – makePayment, changePIN, checkBalance and checkTransactions
+        ii) setCreditLimit
+        iii) checkCreditLimit
+        iv) makePayment (OVERLOADED)
+        v) checkTransactions (OVERLOADED)
+c) debit (inherits card) class:  
+        i) Inherits – makePayment, changePIN, checkBalance and checkTransactions  
+        ii) setTransactionLimit  
+        iii) checkTransactionLimit
+        iv) changeCardType
+        v) checkCardType
+        vi) makePayment (OVERLOADED)
 
-Functions:
+Key Functions:
 1)	Deposit:  Money goes into account
 2)	Withdraw: Money leaves account  
 a)	Pay – Money leaves account
