@@ -27,7 +27,8 @@ class debit(cc.card):
             daily maximum transaction allowed        
         card_type : string
             card type : diamond, gold, platinum   
-
+        --------  
+        --------  
         Base Class Methods:
         --------       
         checkCode - INTERNAL FUNCTION
@@ -42,7 +43,7 @@ class debit(cc.card):
         checkTransactions
             Prints summary information of past transactions.
 
-        Credit Card Class Methods:
+        Debit Card Class Methods:
         --------
         setTransactionLimit
             Set maximum limit for the daily amount withdrawn from the account.     

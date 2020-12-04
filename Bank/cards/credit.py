@@ -27,7 +27,8 @@ class credit(cc.card):
             card maximum credit limit allowed        
         interest_rate : int
             interest percent accrued on the credit amount   
-
+        --------  
+        --------  
         Base Class Methods:
         --------   
         checkCode - INTERNAL FUNCTION
