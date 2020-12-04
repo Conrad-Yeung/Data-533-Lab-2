@@ -45,6 +45,12 @@ class credit(cc.card):
         setCreditLimit
             Set maximum limit for the credit taken from the account.     
 
+        setInterestRate
+            Changes the credit card interest rate
+
+        checkInterestRate
+            Check the credit card interest rate
+
         checkCreditLimit
             Check maximum limit for the credit taken from the account.    
 
@@ -103,13 +109,13 @@ class credit(cc.card):
             return
         
         if self.credit_limit < newlim:
-            print("Your transaction limit has increased from ${:.2f} to ${:.2f}.\n".format(self.credit_limit,newlim))
+            print("Your card credit limit has increased from ${:.2f} to ${:.2f}.\n".format(self.credit_limit, newlim))
             self.credit_limit = newlim
         elif self.credit_limit > newlim:
-            print("Your transaction limit has decreased from ${:.2f} to ${:.2f}.\n".format(self.credit_limit,newlim))
+            print("Your card credit limit has decreased from ${:.2f} to ${:.2f}.\n".format(self.credit_limit, newlim))
             self.credit_limit = newlim
         else:
-            print("Your transaction limit is already ${:.2f}.\n".format(self.credit_limit))
+            print("Your card credit limit is already ${:.2f}.\n".format(self.credit_limit))
 
 
     def checkCreditLimit(self, pin_entered):
@@ -127,6 +133,64 @@ class credit(cc.card):
             print("Invalid pin code, please try again!")
         else:
             print("Your card credit limit is ${:.2f}.\n".format(self.credit_limit))
+
+
+    def setInterestRate(self, pin_entered, mgr_code_entered, newRate):
+        '''
+        Changes the credit card interest rate
+            
+            Parameters:
+            -----------
+            newRate : int/float. 
+                Must be positive number
+            pin_entered : int. 
+                Must be four digits   
+            mgr_code_entered: int. 
+                Branch Manager Code (same for all objects). Only manager allowed to alter credit limit.
+        '''
+        # Manager Authentication
+        if (mgr_code_entered is None)|(mgr_code_entered != super().manager_pwd):
+            print("Unauthorized access. Only branch manager can alter the credit limit!")
+            return
+
+        # Customer Authentication
+        if (pin_entered is None) | (not self.checkCode(pin_entered)):
+            print("Invalid pin code, please try again!")
+            return
+        else:
+            print("Account Holder: {}".format(self.acct_title))
+            print("Card Number: {}".format(self.card_no))
+            print("Current Balance: ${:.2f}".format(self.bal_curr))
+
+        if (newRate is None) | (newRate < 0):
+            print("Provide valid Card credit interest rate.\n")
+            return
+        
+        if self.interest_rate < newRate:
+            print("Your card interest rate has increased from ${:.2f} to ${:.2f}.\n".format(self.interest_rate, newRate))
+            self.interest_rate = newRate
+        elif self.interest_rate > newRate:
+            print("Your card interest rate has decreased from ${:.2f} to ${:.2f}.\n".format(self.interest_rate, newRate))
+            self.interest_rate = newRate
+        else:
+            print("Your card interest rate is already ${:.2f}.\n".format(self.interest_rate))
+
+
+    def checkInterestRate(self, pin_entered):
+        '''
+        Check the credit card interest rate
+            
+            Parameters:
+            -----------
+            pin_entered : int. 
+                Must be four digits 
+        '''
+
+        # Customer Authentication
+        if (pin_entered is None) | (not self.checkCode(pin_entered)):
+            print("Invalid pin code, please try again!")
+        else:
+            print("Your card interest rate  is ${:.2f}.\n".format(self.interest_rate))
 
 
     def makePayment(self, pin_entered, amount, srvc_point="Unknown"):
